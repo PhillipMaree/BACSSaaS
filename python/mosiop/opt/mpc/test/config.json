@@ -1,0 +1,40 @@
+{
+  "mosiop": {
+    "PLANT": {
+      "parameters" : [1000, 472, 23],
+      "initial" : {
+        "free": 0,
+        "y0": [0.1, 0.1, 0.1]
+      },
+      "observer": {
+        "enable":1,
+        "name":"kf",
+        "param": {
+          "Q":[1,1,1],
+          "R":[1],
+          "H":[1,0,0]
+        }
+      }
+    },
+    "MPC": {
+      "temporal": {
+        "T": 10,
+        "N": 10,
+        "h": 0.3,
+        "non_uniform_gain": 0
+      }
+    },
+    "NLP": {
+      "options" : {
+        "verbose" : 5,
+        "warmstart" : 0,
+        "max_iter" : 1000,
+        "linear_solver" : "ma57"
+      },
+      "collocation" : {
+        "method": "radau",
+        "order": 3
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+version: '3.8'
+services:
+
+  bacssaas_boptest:
+    container_name: bacssaas_boptest
+    image: bacssaas/boptest:latest
+    build:
+      context: ./boptest
+      args:
+        - testcase=testcase5_all
+    ports:
+      - 127.0.0.1:5001:5000
+    volumes:
+      - $PWD/../python/boptest:/home/$USER:rw
+    hostname : bacssaas_boptest
+    restart: unless-stopped
+
+  bacssaas_mosiop:
+    container_name: bacssaas_mosiop
+    image: bacssaas/mosiop:latest
+    build:
+      context: ./mosiop
+      args:
+        - USER_NAME=$USER
+    stdin_open: true
+    tty: true
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - $PWD/../python/mosiop:/home/$USER:rw
+    environment:
+      - DISPLAY=$DISPLAY 
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    hostname : bacssaas_moisop
+    privileged: true
+    restart: unless-stopped
+
+  bacssaas_neuron:
+    container_name: bacssaas_neuron
+    image: bacssaas/neuron:latest
+    build:
+      context: ./neuron
+      args:
+        - USER_NAME=$USER
+    stdin_open: true
+    tty: true
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - $PWD/../python/neuron:/home/$USER:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    ports: 
+      - 6000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    hostname : bacssaas_neuron
+    privileged: true
+    restart: unless-stopped
+
+  bacssaas_orchestrator:
+    container_name: bacssaas_orchestrator
+    image: bacssaas/orchestrator:latest
+    build:
+      context: ./orchestrator
+      args:
+        - USER_NAME=$USER
+    stdin_open: true
+    tty: true
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - $PWD/../python/orchestrator:/home/$USER:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
+    hostname : bacssaas_orchestrator
+    privileged: true
+    ports:
+     - "8080:6000"
+     - 6000
+     - 127.0.0.1:5000:5000
+    restart: unless-stopped
+
+  bacssaas_postgresql:
+    container_name: bacssaas_postgresql
+    image: bacssaas/postgresql:latest
+    build:
+      context: ./postgres
+    ports:
+      - 5434:5432
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/Data/BACSSaaS/postgresql/data:/var/lib/postgresql/data
+      - /mnt/Data/BACSSaaS/postgresql/etc:/etc/postgresql
+      - /mnt/Data/BACSSaaS/postgresql/log:/var/log/postgresql
+    env_file:
+      - ./postgres/include/database.env # configure postgres
+    hostname : bacssaas_postgresql
+    restart: unless-stopped

@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+matplotlib
+psycopg2-binary
+SQLAlchemy
+requests
+torch
+aiohttp
+asyncio
+

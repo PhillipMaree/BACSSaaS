@@ -1,0 +1,12 @@
+requests
+marshmallow
+aiohttp
+asyncio
+psycopg2
+numpy
+paho-mqtt
+flask
+dash
+plotly
+sqlalchemy
+pandas

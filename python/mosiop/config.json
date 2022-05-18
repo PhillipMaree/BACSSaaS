@@ -1,0 +1,212 @@
+{
+  "1": {
+    "mosiop" :
+    {
+      "PLANT": {
+        "parameters" : [1e-2,1e6,294.15,1,0],
+        "initial" : {
+          "free": 0,
+          "y0": [293]
+        }
+      },
+      "MPC": {
+        "temporal": {
+          "T": 86400,
+          "N": 12,
+          "h": 900,
+          "non_uniform_gain": 0
+        }
+      },
+      "NLP": {
+        "options" : {
+          "verbose" : 5,
+          "warmstart" : 0,
+          "max_iter" : 1000,
+          "linear_solver" : "ma57"
+        },
+        "collocation" : {
+          "method": "radau",
+          "order": 1
+        }
+      }
+    },
+    "boptest" :
+    {
+      "maps" : {
+        "r" : {"Tout": "TDryBul"},
+        "u" : {"phi_h": "oveAct"},
+        "y": {"Ti": "TRooAir_y"}
+      }
+    }
+  },
+  "2": {
+    "mosiop" :
+    {
+      "PLANT": {
+        "parameters" : [1e-2,1e6,294.15,1e-8,1],
+        "initial" : {
+          "free": 0,
+          "y0": [293]
+        }
+      },
+      "MPC": {
+        "temporal": {
+          "T": 172800,
+          "N": 12,
+          "h": 900,
+          "non_uniform_gain": 0
+        }
+      },
+      "NLP": {
+        "options" : {
+          "verbose" : 5,
+          "warmstart" : 0,
+          "max_iter" : 1000,
+          "linear_solver" : "ma57"
+        },
+        "collocation" : {
+          "method": "radau",
+          "order": 1
+        }
+      }
+    },
+    "boptest" :
+    {
+      "maps" : {
+        "r" : {"Tout": "TDryBul"},
+        "u" : {"phi_h": "oveTSetRooHea"},
+        "y": {"Ti": "TRooAir_y"}
+      }
+    }
+  },
+  "3": {
+    "mosiop" :
+    {
+      "PLANT": {
+        "parameters" : [1e-2, 1e-2, 1e6, 1e6, 294.15, 294.15, 1, 0],
+        "initial" : {
+          "free": 0,
+          "y0": [293, 293]
+        }
+      },
+      "MPC": {
+        "temporal": {
+          "T": 86400,
+          "N": 12,
+          "h": 900,
+          "non_uniform_gain": 0
+        }
+      },
+      "NLP": {
+        "options" : {
+          "verbose" : 5,
+          "warmstart" : 0,
+          "max_iter" : 1000,
+          "linear_solver" : "ma57"
+        },
+        "collocation" : {
+          "method": "radau",
+          "order": 1
+        }
+      }
+    },
+    "boptest" :
+    {
+      "maps" : {
+        "r" : {"Tout": "TDryBul"},
+        "u" : {"preHeaNor": "oveActNor", "preHeaSou": "oveActSou"},
+        "y": {"TZonNor": "TRooAirNor_y", "TZonSou": "TRooAirSou_y"}
+      }
+    }
+  },
+  "4": {
+    "mosiop" :
+    {
+      "PLANT": {
+        "parameters" : [0, 0, 1e-2, 1e-2, 1e6, 1e6, 294.15, 294.15, 1, 0],
+        "initial" : {
+          "free": 0,
+          "y0": [293, 293]
+        }
+      },
+      "MPC": {
+        "temporal": {
+          "T": 86400,
+          "N": 12,
+          "h": 900,
+          "non_uniform_gain": 0
+        }
+      },
+      "NLP": {
+        "options" : {
+          "verbose" : 5,
+          "warmstart" : 0,
+          "max_iter" : 1000,
+          "linear_solver" : "ma57"
+        },
+        "collocation" : {
+          "method": "radau",
+          "order": 1
+        }
+      }
+    },
+    "boptest" :
+    {
+      "maps" : {
+        "r" : {"Tout": "TDryBul"},
+        "u" : {"preHeaNor": "oveActNor", "preHeaSou": "oveActSou"},
+        "z": {"TZonNor_meas": "TRooAirNor_y", "TZonSou_meas": "TRooAirSou_y"}
+      }
+    }
+  },
+  "5": {
+    "mosiop" :
+    {
+      "PLANT": {
+        "parameters" : [4.81e-5, 1.63e-3, 1.33e-4, 0.1e-1, 2.82e7, 9.40e6, 6.87e8, 50, 50, 295, 1e-4, 1],
+        "initial" : {
+          "free": 0,
+          "y0": [293, 293, 293]
+        },
+        "observer": {
+          "enable":0,
+          "name":"kf",
+          "param": {
+            "P":[1,1,1],
+            "Q":[1,2,2],
+            "R":[0.01],
+            "H":[1,0,0]
+          }
+        }
+      },
+      "MPC": {
+        "temporal": {
+          "T": 86400,
+          "N": 48,
+          "h": 900,
+          "non_uniform_gain": 0
+        }
+      },
+      "NLP": {
+        "options" : {
+          "verbose" : 5,
+          "warmstart" : 0,
+          "max_iter" : 1000,
+          "linear_solver" : "ma57"
+        },
+        "collocation" : {
+          "method": "radau",
+          "order": 1
+        }
+      }
+    },
+    "boptest" :
+    {
+      "maps" : {
+        "r" : {"Ta": "TDryBul", "phi_s":"HGloHor"},
+        "u" : {"phi_h": "oveAct"},
+        "y": {"Ti": "TRooAir_y", "Te":"TRooEnv_y", "Th":"TRooHea_y"}
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+[submodule "python/mosiop/opt"]
+	path = python/mosiop/opt
+	url = ssh://git@git.code.sintef.no/sdfs/opt.git
+[submodule "python/neuron/api"]
+	path = python/neuron/api
+	url = ssh://git@git.code.sintef.no/sdfs/api.git
+[submodule "python/orchestrator/api"]
+	path = python/orchestrator/api
+	url = ssh://git@git.code.sintef.no/sdfs/api.git
+[submodule "python/neuron/aml"]
+	path = python/neuron/aml
+	url = ssh://git@git.code.sintef.no/sdfs/aml.git
+[submodule "python/mosiop/api"]
+	path = python/mosiop/api
+	url = ssh://git@git.code.sintef.no/sdfs/api.git
+
+[submodule "docker/boptest/include/project1-boptest"]
+	path = docker/boptest/include/project1-boptest
+	url = https://github.com/mariuseb/project1-boptest.git
